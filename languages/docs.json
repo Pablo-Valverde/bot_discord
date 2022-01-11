@@ -3,21 +3,27 @@
         "COMMANDS":{
             "HELP":{
                 "NAME": "help",
+                "FLAGS":{
+                },
                 "PERMISSIONS_REQUIRED": 0,
                 "SHORT_DESCRIPTION": "Muestra el menú de ayuda",
                 "LONG_DESCRIPTION": "Muestra el menú de ayuda"
             },
             "PING":{
                 "NAME": "ping",
+                "FLAGS":{
+                },
                 "PERMISSIONS_REQUIRED": 0,
                 "SHORT_DESCRIPTION": "Muestra la latencia del bot",
                 "LONG_DESCRIPTION": "Muestra la latencia del bot"
             },
             "GIVEAWAY":{
                 "NAME": "giveaway",
+                "FLAGS":{
+                },
                 "PERMISSIONS_REQUIRED": 1,
                 "SHORT_DESCRIPTION": "Crea un nuevo sorteo",
-                "LONG_DESCRIPTION": "Creau un nuevo sorteo"
+                "LONG_DESCRIPTION": "Crea un nuevo sorteo"
             }
         },
         "THE_COMMAND": "El comando",
