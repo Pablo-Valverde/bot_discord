@@ -45,8 +45,10 @@ class Wrapped_Client(discord.Client):
         self.prefix = prefix
 
     def parse_command(self, message:discord.Message):
-        command = message.content.split(" ", maxsplit=1)[0]
-        return command[1:] if command[0] == self.prefix else None
+        individual_messages = message.content.split(" ", maxsplit=1)
+        command = individual_messages[0]
+        arguments = individual_messages[1].split(" ") if individual_messages.__len__() > 1 else []
+        return (command[1:], arguments) if command[0] == self.prefix else (None, None)
 
     async def on_ready(self):
         logger.info('Bot is ready.')
@@ -54,12 +56,12 @@ class Wrapped_Client(discord.Client):
     async def on_message(self, message:discord.Message):
         if not message.content: return
         if not self.is_ready(): return
-        command = self.parse_command(message)
+        command, arguments = self.parse_command(message)
         if not command: return
         logger.info('"%s" by %d on channel %d of guild %d.' % (message.content, message.author.id, message.channel.id, message.guild.id))
-        await self.get_service(command, message=message)
+        await self.get_service(command, arguments, message=message)
 
-    async def get_service(self, service_name, **options):
+    async def get_service(self, service_name, arguments, **options):
         """
             Partially from:
             #https://www.geeksforgeeks.org/how-to-dynamically-load-modules-or-classes-in-python/
@@ -71,6 +73,7 @@ class Wrapped_Client(discord.Client):
             message: discord.Message
 
         """
+        service_name = service_name.lower()
         service_name = service_name.replace("_", "")
         try:
             #__import__ method used
@@ -78,7 +81,7 @@ class Wrapped_Client(discord.Client):
             module = __import__("services.%s" % service_name)
             # getting execute by
             # getattr() method
-            await getattr(module, service_name).execute(**options, client=self)
+            await getattr(module, service_name).execute(**options, client=self, command=service_name, arguments=arguments)
         except ModuleNotFoundError as mnfe:
             # TODO log error 
             pass

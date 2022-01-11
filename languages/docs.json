@@ -1,5 +1,31 @@
 {
     "ES":{
-        "HELP_DESCRIPTION":"Este es el comando de ayuda: TODO"
+        "COMMANDS":{
+            "HELP":{
+                "NAME": "help",
+                "PERMISSIONS_REQUIRED": 0,
+                "SHORT_DESCRIPTION": "Muestra el menú de ayuda",
+                "LONG_DESCRIPTION": "Muestra el menú de ayuda"
+            },
+            "PING":{
+                "NAME": "ping",
+                "PERMISSIONS_REQUIRED": 0,
+                "SHORT_DESCRIPTION": "Muestra la latencia del bot",
+                "LONG_DESCRIPTION": "Muestra la latencia del bot"
+            },
+            "GIVEAWAY":{
+                "NAME": "giveaway",
+                "PERMISSIONS_REQUIRED": 1,
+                "SHORT_DESCRIPTION": "Crea un nuevo sorteo",
+                "LONG_DESCRIPTION": "Creau un nuevo sorteo"
+            }
+        },
+        "THE_COMMAND": "El comando",
+        "NOT_FOUND": "no existe",
+        "PERMISSIONS_REQUIRED": "Permisos requeridos",
+        "PERMISSIONS":{
+            "0":"Cualquiera",
+            "1":"Administradores"
+        }
     }
 }
