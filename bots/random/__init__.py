@@ -17,7 +17,7 @@ def parse():
         description='Random related discord bot.',
     )
     parser.add_argument('CONFIG_FILE', type=str, nargs='?', default='config/config.json', help='Configuration file')
-    parser.add_argument('LANGUAGE', type=language, nargs='?', default="ES",choices=list(language))
+    parser.add_argument('LANGUAGE', type=language, nargs='?', default="ES", choices=list(language))
     return parser.parse_args()
 
 args = parse()
@@ -86,4 +86,4 @@ class Wrapped_Client(discord.Client):
             # TODO log error 
             pass
 
-bot = Wrapped_Client(prefix='-').run(config['BOT_KEY'])
+bot = Wrapped_Client(prefix=config["PREFIX"]).run(config['BOT_KEY'])
