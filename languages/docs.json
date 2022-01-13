@@ -1,5 +1,32 @@
 {
     "ES":{
-        "HELP_DESCRIPTION":"Este es el comando de ayuda: TODO"
+        "COMMANDS":{
+            "AVAILABLE_COMMANDS":{
+                "PING":{
+                    "ALIASES":[
+                        "LATENCY"
+                    ],
+                    "DESCRIPTION": "Muestra la latencia del bot"
+                },
+                "HELP":{
+                    "ALIASES":[
+                        "COMMANDS",
+                        "CMDS"
+                    ],
+                    "DESCRIPTION": "Muestra el menu de ayuda"
+                },
+                "INSULTAR":{
+                    "ALIASES":[
+
+                    ],
+                    "DESCRIPTION": "Insulto a quien tu me digas"
+                }
+            },
+            "ALIAS": "Alias",
+            "ERROR_TITLE": "Error",
+            "COMMAND_ERROR": "Ha ocurrido un error inesperado al ejecutar el comando"
+        },
+        "EMBED_COLOR_CORRECT": "0xffd79e",
+        "EMBED_COLOR_ERROR": "0xffa3a3"
     }
 }

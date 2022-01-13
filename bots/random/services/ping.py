@@ -1,8 +1,20 @@
 import discord
 
-async def execute(**kwards):
-    await __func(message=kwards["message"], client=kwards["client"])
 
-async def __func(message:discord.Message, client):
+ping_ranges = {
+    65: "🟢",
+    200: "🟡",
+    9999: "🔴"
+}
+
+
+async def __run__(self, message:discord.Message, client, *args, **kwards):
     ping = client.latency * 100
-    await message.channel.send("%.0f ms" % ping)
+    buffer = ""
+    for ping_value in ping_ranges:
+        if ping < ping_value:
+            buffer += "%s " % ping_ranges[ping_value]
+            break
+    buffer += "%.0f ms" % ping
+    embed=discord.Embed(title=buffer, color=client.embed_color)
+    await message.channel.send(embed=embed)
