@@ -20,6 +20,12 @@
 
                     ],
                     "DESCRIPTION": "Insulto a quien tu me digas"
+                },
+                "!LOCURA":{
+                    "ALIASES":[
+                        "REVENS"
+                    ],
+                    "DESCRIPTION": "Me vuelvo loco"
                 }
             },
             "ALIAS": "Alias",

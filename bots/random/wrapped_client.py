@@ -3,16 +3,10 @@ import discord
 import logging
 
 
-
 class Wrapped_Client(discord.Client):
 
     def __init__(self, language : dict, services_path : str, prefix : str="", logger : logging.Logger=logging.getLogger('bot_client')) -> None:
-        insultos = "negro hijo de la gran puta-forro de mierda-transexual seudosimio de mierda-putofobico del orto mal-parido aborto fallido de la naturaleza-culo roto pijeado-chupa pijas succiona Soretes-choclofobico-dildo culeado inmeurable mar de pajero-vaca gorda lechera-teton pelotudo-dinosaurio traga hormigas-elefante travesti gay traga culos-gordo sordo atragantado con porongas-Ojalá te viole un negro camionero nazi-hijo de la gran re putisima madre que te lo re mil pario-seudopajero etereo sorete radioactivo-tirate de un puente obeso volador huele pedos balanzafobico panzon-come truchas-conchudo atragantado-ciego escupe mierda-pene retráctil-viejo conchudo-tarado inútil sempiterno-culo de petricor-cuando hablabas escupis mierda-dislexico traga leche-gorda vaca-conspicuofobico superfluo de mierda-no servis hilo de down mogolico que sos autista-la Concha de tu vieja puta-enfermo de mierda violador de cangrejos-porongeado del orto dilucidio de inservible-ojala te viole darthes-vilipendio a la humanidad suicidate-enfermito tarado-zorro putita barata-coje viejas macrista con parkingson-bin diesel con cáncer-te pareces a carlitos-con esa cara de pelotudo bruto villero-volvé a la escuela inestrictado tubular de culos-escucha porno necrofilico-pendejo egipcio-retrasado vikingo mira pitos-coje arboles-viola perros-toma termidor chetofobico-pobre de mierda volvé a tu casa de cartón radioactiva-camión lleno de negros que te trajeron en un container de chernobyl-tontito huele pedos-balanzafobico panzon come truchas-conchudo atragantado-ciego escupe mierda proxoneta-garcha consolas virgen-mongolo azteca no la pones ni con un palo-drogadicto-asesino cancerigenico pajero hecho de plutonio-autista de mierda-eres un quintana-payaso de mierda-te huelen los pies igual que al parse-gordo forro-gorio-chupavergas-andá al porn channel a cascartela-piltrafilla-eres un cabestro-eres mas pedofilo que energuia-lerdo come longanizas-lamesables-muerdealmohadas-alcubillano de mierda-toca tubas-costalero-nazareno-clown-me quedé sin insultos que decirte, esa cara de mierda me dejó sin palabras-"
-        self.insultos = insultos.split("-")
-        
-        intent = discord.Intents.default()
-        intent.messages = True
-        intent.members = True
+        intent = discord.Intents.all()
         super().__init__(intent=intent)
         self.language = language
         self.prefix = prefix

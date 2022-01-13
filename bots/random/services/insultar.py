@@ -1,15 +1,23 @@
-async def __run__(self, arguments, client, message, *args, **kwards):
-        if not arguments:
-                return
-        arguments = arguments.split(" ", maxsplit=1)[0]
-        member = arguments[3:-1]
-        await insult_member(member, message.channel, client, message.author.id)
+import random
 
-async def insult_member(id, channel, client, self_id):
-    import random
-    rand = random.randint(0, client.insultos.__len__())
-    if id.__str__() == client.user.id.__str__():
-        await channel.send("<@!%s> %s" % (self_id, client.insultos[rand]))
+        
+async def __run__(self, arguments, client, message, *args, **kwards):
+    print(arguments, client, message)
+    if not arguments:
         return
-    user = await client.fetch_user(id)
-    await channel.send("<@!%s> %s" % (user.id, client.insultos[rand]))
+    arguments = arguments.split(" ", maxsplit=1)[0]
+    try:
+        member = arguments[3:-1]
+        user = await client.fetch_user(int(member))
+        if user.id == client.user.id:
+            user = message.author
+    except:
+        user = message.author
+    finally:
+        await insult_member(user, message.channel)
+
+async def insult_member(user, channel):
+    with open("insultos.txt", "r") as insultostxt:
+        insultos = insultostxt.readlines()
+        rand = random.randint(0, insultos.__len__())
+        await channel.send("<@!%s> %s" % (user.id, insultos[rand]))

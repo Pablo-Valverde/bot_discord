@@ -17,9 +17,6 @@ class service(ABC):
         self.aliases = aliases
         self.description = description
 
-    async def __execute__(self, *args, **kwards):
-        await self.__run__(*args, **kwards)
-
     @abstractmethod
     async def __run__(self, *args, **kwards):
         return
