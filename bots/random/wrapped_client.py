@@ -49,7 +49,6 @@ class Wrapped_Client(discord.Client):
         self.logger.info('Bot is ready.')
 
     async def on_message(self, message:discord.Message):
-        await self.change_name()
         if not message.content: return
         if not self.is_ready(): return
         parsed_message = self.parse_message(message)
@@ -67,13 +66,3 @@ class Wrapped_Client(discord.Client):
         except:
             message=options["message"]
             await message.channel.send(embed=self.embed_error)
-
-    async def change_name(self):
-        import time
-        guild = await self.fetch_guild(843443913557934080)
-        nombres = ["🙉🍌ⒶⓊⓉⒾⓈⓉ🤡🎈", "🎈🙉ⒶⓊⓉⒾⓈⓉ🍌🤡", "🤡🎈ⒶⓊⓉⒾⓈⓉ🙉🍌", "🍌🤡ⒶⓊⓉⒾⓈⓉ🎈🙉", "🙉🍌ⒶⓊⓉⒾⓈⓉ🤡🎈"]
-        while True:
-            nombre = nombres.pop(0)
-            nombres.append(nombre)
-            await guild.edit(name=nombre)
-            time.sleep(1)
