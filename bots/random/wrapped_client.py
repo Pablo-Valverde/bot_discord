@@ -53,7 +53,7 @@ class Wrapped_Client(discord.Client):
 
     async def get_service(self, service_name, **options):
         try:
-            code, _ = _service.get_service(service_name.lower())
+            code, _ = self.get_available_service(service_name.lower())
             await code(**options)
         except _service.ServiceNotFound:
             pass
