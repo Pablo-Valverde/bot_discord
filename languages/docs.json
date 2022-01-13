@@ -4,13 +4,13 @@
             "AVAILABLE_COMMANDS":{
                 "PING":{
                     "ALIASES":[
-                        "LATENCY"
+                        "LATENCIA"
                     ],
                     "DESCRIPTION": "Muestra la latencia del bot"
                 },
                 "HELP":{
                     "ALIASES":[
-                        "COMMANDS",
+                        "COMANDOS",
                         "CMDS"
                     ],
                     "DESCRIPTION": "Muestra el menu de ayuda"
@@ -21,9 +21,11 @@
                     ],
                     "DESCRIPTION": "Insulto a quien tu me digas"
                 },
-                "!LOCURA":{
+                "LOCURA":{
                     "ALIASES":[
-                        "REVENS"
+                        "REVENS",
+                        "MODODIABLO",
+                        "DELOCOS"
                     ],
                     "DESCRIPTION": "Me vuelvo loco"
                 }

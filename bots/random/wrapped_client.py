@@ -7,7 +7,7 @@ class Wrapped_Client(discord.Client):
 
     def __init__(self, language : dict, services_path : str, prefix : str="", logger : logging.Logger=logging.getLogger('bot_client')) -> None:
         intent = discord.Intents.all()
-        super().__init__(intent=intent)
+        super().__init__(intents=intent)
         self.language = language
         self.prefix = prefix
         self.logger = logger
