@@ -15,3 +15,4 @@ async def __run__(arguments, client, message, *args, **kwards):
         user = message.author
     finally:
         await common.insultar(user, message.channel)
+        await message.delete()
