@@ -1,7 +1,7 @@
 import discord
 
 
-async def __run__(self, message:discord.Message, client, arguments, *args, **kwards):
+async def __run__(self, message, client, arguments, *args, **kwards):
     if arguments:
         arguments = arguments.split(" ")
     else:

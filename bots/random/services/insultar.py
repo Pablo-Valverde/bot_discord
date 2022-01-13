@@ -1,6 +1,3 @@
-
-
-
 async def __run__(self, arguments, client, message, *args, **kwards):
         if not arguments:
                 return

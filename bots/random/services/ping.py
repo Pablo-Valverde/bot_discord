@@ -7,8 +7,7 @@ ping_ranges = {
     9999: "🔴"
 }
 
-
-async def __run__(self, message:discord.Message, client, *args, **kwards):
+async def __run__(self, message, client, *args, **kwards):
     ping = client.latency * 100
     buffer = ""
     for ping_value in ping_ranges:
