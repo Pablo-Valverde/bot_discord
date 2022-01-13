@@ -1,5 +1,3 @@
-from os import truncate
-from typing import AsyncContextManager
 from . import _service
 import discord
 import logging
