@@ -61,6 +61,8 @@ class felaciano(bots.random.wrapped_client.Wrapped_Client):
         return (f_command, f_arguments)
 
     async def on_ready(self):
+        activity = discord.Activity(type=discord.ActivityType.watching, name="el porn channel")
+        await self.change_presence(activity=activity)
         self.logger.info('Bot is ready.')
     
     async def on_message(self, message:discord.Message):
