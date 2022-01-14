@@ -1,6 +1,6 @@
 import json
 import argparse
-import bots.random.wrapped_client
+import pydiscord
 import os
 import logging
 import datetime
@@ -40,7 +40,7 @@ logger.addHandler(handler)
 api_key = config['BOT_KEY']
 scripts_file = args.SCRIPTS_FILE
 
-class felaciano(bots.random.wrapped_client.Wrapped_Client):
+class felaciano(pydiscord.Wrapped_Client):
 
     def __init__(self, language: dict, services_path: str, prefix: str = "", logger: logging.Logger = None) -> None:
         super().__init__(language, services_path, prefix, logger)
