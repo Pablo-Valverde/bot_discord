@@ -1,4 +1,3 @@
-import random
 import discord
 
 
@@ -8,13 +7,8 @@ ping_ranges = {
     9999: "🔴"
 }
 
-async def insultar(user, channel):
-    with open("insultos.txt", "r") as insultostxt:
-        insultos = insultostxt.readlines()
-        rand = random.randint(0, insultos.__len__())
-        await channel.send("<@!%s> %s" % (user.id, insultos[rand]))
-
-async def ping(channel, client):
+@staticmethod
+async def __run__(message, client, *args, **kwards):
     ping = client.latency * 100
     buffer = ""
     for ping_value in ping_ranges:
@@ -23,4 +17,4 @@ async def ping(channel, client):
             break
     buffer += "%.0f ms" % ping
     embed=discord.Embed(title=buffer, color=client.embed_color)
-    await channel.send(embed=embed)
+    await message.channel.send(embed=embed)
