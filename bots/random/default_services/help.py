@@ -29,7 +29,7 @@ async def show_all_commands(self, message, client):
 
 async def show_command_info(message, arguments, client):
     command = arguments[0]
-    _, command_info = client.get_available_service(command)
+    _, command_info = client.get_service(command)
     buffer = "%s\n`%s%s`\n\n**%s**:\n" % (command_info.description, client.prefix, command, client.language["COMMANDS"]["ALIAS"])
     valid_alias = [alias for alias in command_info.aliases if not alias.lower() == command]
     alias = (", ".join(valid_alias)).lower()
