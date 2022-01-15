@@ -1,5 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import io
+from re import A
+from textwrap import fill
+from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
+import io
 import argparse
+import services.common
 import pydiscord
 import os
 import logging
@@ -61,7 +70,7 @@ class felaciano(pydiscord.Wrapped_Client):
         return (f_command, f_arguments)
 
     async def on_ready(self):
-        activity = discord.Activity(type=discord.ActivityType.watching, name="el porn channel")
+        activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
         await self.change_presence(activity=activity)
         self.logger.info('Bot is ready.')
     
@@ -74,4 +83,53 @@ class felaciano(pydiscord.Wrapped_Client):
         self.logger.info('"%s" by %d on channel %d of guild %d.' % (message.content, message.author.id, message.channel.id, message.guild.id))
         await self.execute_service(command, message=message, client=self, arguments=argument)
 
-bot = felaciano(language, scripts_file, prefix=prefix).run(api_key)
+    async def welcome(self, member):
+        channel = member.guild.system_channel
+        if not channel:
+            return
+        member_bytes = await member.avatar_url.read()
+
+        circle_white = Image.new('RGBA', (1024, 1024), (255, 0, 0, 0))
+        border = ImageDraw.Draw(circle_white)
+        border.ellipse([(0,0),(1024,1024)], fill="white", outline="white")
+        member_photo = Image.open(io.BytesIO(member_bytes))
+        mask = Image.open("resources/mask.png").convert("L")
+        output = ImageOps.fit(member_photo, mask.size, centering=(0.5, 0.5))
+        output.putalpha(mask)
+        output = output.resize((950,950))
+        circle_white.paste(output, (38,38), output)
+        circle_white = circle_white.resize((256,256))
+        
+        img = Image.open("resources/background.png").resize((1024,512))
+        img.paste(circle_white, (376,25), circle_white)
+
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype("ariblk.ttf", 36)
+        font_name = ImageFont.truetype("ariblk.ttf", 50)
+
+        insulto = ""
+        for _ in range(0,100):
+            insulto = services.common.get_insulto_aleatorio().lower()
+            if insulto.__len__() < 30:
+                break
+
+        text = "Bienvenido %s" % insulto
+
+        border_color = "black"
+        text_color = self.embed_color
+
+        draw.text((511,374), text, fill=border_color, font=font, anchor="mm")
+        draw.text((513,376), text, fill=border_color, font=font, anchor="mm")
+        draw.text((512,375), text, fill=text_color, font=font, anchor="mm")
+
+        draw.text((511,434), member.name, fill=border_color, font=font_name, anchor="mm")
+        draw.text((513,436), member.name, fill=border_color, font=font_name, anchor="mm")
+        draw.text((512,435), member.name, fill=text_color, font=font_name, anchor="mm")
+        img.save("tmp.png")
+        await channel.send(file=discord.File("tmp.png"))
+        os.remove("tmp.png")
+
+    async def on_member_join(self, member:discord.Member):
+        await self.welcome(member)
+
+bot = felaciano(language, scripts_file, prefix=prefix, logger=logger).run(api_key)
