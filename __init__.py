@@ -73,18 +73,8 @@ class felaciano(pydiscord.Wrapped_Client):
         await self.change_presence(activity=activity)
         self.logger.info('Bot is ready.')
     
-    async def on_message(self, message:discord.Message):
-        if not message.content: return
-        if message.author.bot: return
-        if not self.is_ready(): 
-            await message.channel.send("Que te esperes coño, que estoy llegando al ordenador")
-            return
-        parsed_message = self.parse_message(message)
-        if not parsed_message: return
-        command, argument = parsed_message
-        self.logger.info('"%s" by %d on channel %d of guild %d.' % (message.content, message.author.id, message.channel.id, message.guild.id))
-        await message.channel.trigger_typing()
-        await self.execute_service(command, message=message, client=self, arguments=argument)
+    #async def on_message(self, message:discord.Message):
+    #    await super().on_message(message)
 
     async def welcome(self, member):
         channel = member.guild.system_channel
