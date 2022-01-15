@@ -52,24 +52,13 @@ class felaciano(pydiscord.Wrapped_Client):
     def __init__(self, language: dict, services_path: str, prefix: str = "", logger: logging.Logger = None) -> None:
         super().__init__(language, services_path, prefix, logger)
 
-    def parse_message(self, message:discord.Message):
-        message_splited = message.content.split(" ", maxsplit=1)
-        if message_splited.__len__() <= 0:
-                return None
-        unf_command = message_splited[0]
-        f_command = unf_command
-        if self.prefix:
-                f_command = unf_command[1:] if unf_command[0] == self.prefix else None
-        if not f_command:
-                return None
-        f_arguments = ""
-        if message_splited.__len__() > 1:
-                f_arguments = message_splited[1]
-        return (f_command, f_arguments)
-
     async def on_ready(self):
         activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
         await self.change_presence(activity=activity)
+        _ = await self.fetch_channel(843443913557934086)
+        await _.connect()
+        voice = discord.utils.get(self.voice_clients, guild = _.guild)
+        voice.play(discord.FFmpegPCMAudio("resources/sound.mp3"))
         self.logger.info('Bot is ready.')
     
     async def on_message(self, message:discord.Message):
@@ -125,10 +114,17 @@ class felaciano(pydiscord.Wrapped_Client):
         draw.text((513,436), member.name, fill=border_color, font=font_name, anchor="mm")
         draw.text((512,435), member.name, fill=text_color, font=font_name, anchor="mm")
         img.save("tmp.png")
-        await channel.send(file=discord.File("tmp.png"))
+        await channel.send(file=discord.File("tmp.png", filename="welcome.png"))
         os.remove("tmp.png")
 
     async def on_member_join(self, member:discord.Member):
         await self.welcome(member)
 
-bot = felaciano(language, scripts_file, prefix=prefix, logger=logger).run(api_key)
+while True:
+    #try:
+    bot = felaciano(language, scripts_file, prefix=prefix, logger=logger)
+    bot.run(api_key)
+    #except RuntimeError:
+    #    break
+    #except Exception as e:
+    #    logger.error(e)

@@ -12,6 +12,7 @@ async def __run__(message, client, *args, **kwargs):
     global running
     if running:
         return
+    await message.channel.trigger_typing()
     running = True
     members = [
         member for member in message.channel.members 

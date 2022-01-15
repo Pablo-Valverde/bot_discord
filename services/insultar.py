@@ -8,7 +8,7 @@ async def __run__(arguments, client, message, *args, **kwards):
     arguments = arguments.split(" ", maxsplit=1)[0]
     try:
         member = arguments[3:-1]
-        user = await client.fetch_user(int(member))
+        user = await message.guild.fetch_member(int(member))
         if user.id == client.user.id:
             user = message.author
     except:
