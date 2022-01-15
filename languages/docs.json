@@ -1,37 +1,41 @@
 {
     "ES":{
         "COMMANDS":{
-            "HELP":{
-                "NAME": "help",
-                "FLAGS":{
+            "AVAILABLE_COMMANDS":{
+                "PING":{
+                    "ALIASES":[
+                        "LATENCIA"
+                    ],
+                    "DESCRIPTION": "Muestra la latencia del bot"
                 },
-                "PERMISSIONS_REQUIRED": 0,
-                "SHORT_DESCRIPTION": "Muestra el menú de ayuda",
-                "LONG_DESCRIPTION": "Muestra el menú de ayuda"
+                "HELP":{
+                    "ALIASES":[
+                        "COMANDOS",
+                        "CMDS"
+                    ],
+                    "DESCRIPTION": "Muestra el menu de ayuda"
+                },
+                "INSULTAR":{
+                    "ALIASES":[
+                        "CAGARSEEN"
+                    ],
+                    "DESCRIPTION": "Insulto a quien tu me digas"
+                },
+                "LOCURA":{
+                    "ALIASES":[
+                        "REVENS",
+                        "MODODIABLO",
+                        "DELOCOS"
+                    ],
+                    "DESCRIPTION": "Me vuelvo loco"
+                }
             },
-            "PING":{
-                "NAME": "ping",
-                "FLAGS":{
-                },
-                "PERMISSIONS_REQUIRED": 0,
-                "SHORT_DESCRIPTION": "Muestra la latencia del bot",
-                "LONG_DESCRIPTION": "Muestra la latencia del bot"
-            },
-            "GIVEAWAY":{
-                "NAME": "giveaway",
-                "FLAGS":{
-                },
-                "PERMISSIONS_REQUIRED": 1,
-                "SHORT_DESCRIPTION": "Crea un nuevo sorteo",
-                "LONG_DESCRIPTION": "Crea un nuevo sorteo"
-            }
+            "ALIAS": "Alias",
+            "ERROR_TITLE": "Error",
+            "COMMAND_ERROR": "Ha ocurrido un error inesperado al ejecutar el comando",
+            "NO_USERS": "No hay usuarios"
         },
-        "THE_COMMAND": "El comando",
-        "NOT_FOUND": "no existe",
-        "PERMISSIONS_REQUIRED": "Permisos requeridos",
-        "PERMISSIONS":{
-            "0":"Cualquiera",
-            "1":"Administradores"
-        }
+        "EMBED_COLOR_CORRECT": "0xffd79e",
+        "EMBED_COLOR_ERROR": "0xffa3a3"
     }
 }
