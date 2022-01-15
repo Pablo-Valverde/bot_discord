@@ -7,4 +7,4 @@ async def insultar(user, channel):
 def get_insulto_aleatorio():
     with open("insultos.txt", "rt", encoding="UTF-8") as insultostxt:
         insultos = [insulto.replace("\n","") for insulto in insultostxt.readlines()]
-        return random.choice(insultos)
+        return random.choice(insultos).lower()

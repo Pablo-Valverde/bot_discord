@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import io
-from re import A
-from textwrap import fill
+import time
 from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
 import io
@@ -76,11 +75,15 @@ class felaciano(pydiscord.Wrapped_Client):
     
     async def on_message(self, message:discord.Message):
         if not message.content: return
-        if not self.is_ready(): return
+        if message.author.bot: return
+        if not self.is_ready(): 
+            await message.channel.send("Que te esperes coño, que estoy llegando al ordenador")
+            return
         parsed_message = self.parse_message(message)
         if not parsed_message: return
         command, argument = parsed_message
         self.logger.info('"%s" by %d on channel %d of guild %d.' % (message.content, message.author.id, message.channel.id, message.guild.id))
+        await message.channel.trigger_typing()
         await self.execute_service(command, message=message, client=self, arguments=argument)
 
     async def welcome(self, member):
