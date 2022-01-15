@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from email import message_from_binary_file
 import io
 import time
 from PIL import Image,ImageFont,ImageDraw,ImageOps
@@ -73,8 +74,15 @@ class felaciano(pydiscord.Wrapped_Client):
         await self.change_presence(activity=activity)
         self.logger.info('Bot is ready.')
     
-    #async def on_message(self, message:discord.Message):
-    #    await super().on_message(message)
+    async def on_message(self, message:discord.Message):
+        if message.author.bot:
+            return
+        if not message.content[0] == self.prefix:
+            return
+        if not self.is_ready():
+            await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
+            return
+        await super().on_message(message)
 
     async def welcome(self, member):
         channel = member.guild.system_channel
