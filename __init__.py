@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from email import message_from_binary_file
 import io
-import time
 from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
 import io
