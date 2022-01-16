@@ -5,7 +5,7 @@ with open("README.md", "r") as readme_file:
 
 requirements = ["discord", 
                 "pillow", 
-                "git@github.com:Pablo-Valverde/pydiscord.git"
+                "pydiscord @ git+ssh://git@github.com/Pablo-Valverde/pydiscord@main"
                ]
 
 setup(
