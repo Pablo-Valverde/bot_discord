@@ -1,7 +1,10 @@
 from setuptools import setup, find_packages
+import os
 
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
+    
+os.system("pip install git+https://github.com/Pablo-Valverde/pydiscord.git")
 
 requirements = ["discord", 
                 "pillow", 
