@@ -7,8 +7,6 @@ import json
 import io
 import argparse
 import random
-
-from async_timeout import asyncio
 import services.common
 import pydiscord
 import os
@@ -50,12 +48,16 @@ logger.addHandler(handler)
 api_key = config['BOT_KEY']
 scripts_file = args.SCRIPTS_FILE
 
+welcome_memebrs = config['WELCOME']
+connect_channels = config['CONNECT']
+
 class felaciano(pydiscord.Wrapped_Client):
 
-    def __init__(self, language: dict, services_path: str, prefix: str = "", logger: logging.Logger = None) -> None:
+    def __init__(self, language: dict, services_path: str, prefix: str = "", logger: logging.Logger = None, connect = True, welcome = True) -> None:
         super().__init__(language, services_path, prefix, logger)
         self.sound_channel = None
-        self.lock = asyncio.Lock()
+        self.connect_channels = connect
+        self.welcome_members = welcome
 
     async def on_ready(self):
         activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
@@ -73,12 +75,13 @@ class felaciano(pydiscord.Wrapped_Client):
         await super().on_message(message)
 
     async def on_voice_state_update(self, member, before, after):
+        if not self.connect_channels: return
         if member.bot: return
         if not after.channel: return
         channel = after.channel
         if not channel: return
         roll = random.randint(0,100)
-        if roll <= 2:
+        if roll <= 100:
             if self.voice_clients:
                 await self.voice_clients[0].disconnect()
             await channel.connect()
@@ -135,11 +138,12 @@ class felaciano(pydiscord.Wrapped_Client):
         os.remove("tmp.png")
 
     async def on_member_join(self, member:discord.Member):
+        if not self.welcome_members: return
         await self.welcome(member)
 
 while True:
     #try:
-    bot = felaciano(language, scripts_file, prefix=prefix, logger=logger)
+    bot = felaciano(language, scripts_file, prefix=prefix, logger=logger, connect=connect_channels, welcome=welcome_memebrs)
     bot.run(api_key)
     #except RuntimeError:
     #    break
