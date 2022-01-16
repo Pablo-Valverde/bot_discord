@@ -6,6 +6,9 @@ from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
 import io
 import argparse
+import random
+
+from async_timeout import asyncio
 import services.common
 import pydiscord
 import os
@@ -51,14 +54,12 @@ class felaciano(pydiscord.Wrapped_Client):
 
     def __init__(self, language: dict, services_path: str, prefix: str = "", logger: logging.Logger = None) -> None:
         super().__init__(language, services_path, prefix, logger)
+        self.sound_channel = None
+        self.lock = asyncio.Lock()
 
     async def on_ready(self):
         activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
         await self.change_presence(activity=activity)
-        _ = await self.fetch_channel(843443913557934086)
-        await _.connect()
-        voice = discord.utils.get(self.voice_clients, guild = _.guild)
-        voice.play(discord.FFmpegPCMAudio("resources/sound.mp3"))
         self.logger.info('Bot is ready.')
     
     async def on_message(self, message:discord.Message):
@@ -70,6 +71,22 @@ class felaciano(pydiscord.Wrapped_Client):
             await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
             return
         await super().on_message(message)
+
+    async def on_voice_state_update(self, member, before, after):
+        if member.bot: return
+        if not after.channel: return
+        channel = after.channel
+        if not channel: return
+        roll = random.randint(0,100)
+        if roll <= 2:
+            if self.voice_clients:
+                await self.voice_clients[0].disconnect()
+            await channel.connect()
+            self.sound_channel = discord.utils.get(self.voice_clients, guild = channel.guild)
+            scripts_on_dir = os.listdir("resources/respiraciones/")
+            sounds_on_dir = [f for f in scripts_on_dir if (os.path.isfile(os.path.join("resources/respiraciones/", f)) and f.find(".mp3") > -1)]
+            sound = random.choice(sounds_on_dir)
+            self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound, executable="resources\\ffmpeg-2022-01-13-git-c936c319bd-essentials_build\\bin\\ffmpeg.exe"))
 
     async def welcome(self, member):
         channel = member.guild.system_channel
