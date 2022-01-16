@@ -7,8 +7,7 @@ with open("README.md", "r") as readme_file:
 os.system("pip install git+https://github.com/Pablo-Valverde/pydiscord.git")
 
 requirements = ["discord", 
-                "pillow", 
-                "pydiscord @ git+ssh://git@github.com/Pablo-Valverde/pydiscord.git"
+                "pillow"
                ]
 
 setup(
