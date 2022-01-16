@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
-requirements = ["discord", "pillow"]
+requirements = ["discord", "pillow", "Pablo-Valverde/pydiscord"]
 
 setup(
     name="felaciano",
