@@ -74,22 +74,22 @@ class felaciano(pydiscord.Wrapped_Client):
             return
         await super().on_message(message)
 
-    async def on_voice_state_update(self, member, before, after):
-        if not self.connect_channels: return
-        if member.bot: return
-        if not after.channel: return
-        channel = after.channel
-        if not channel: return
-        roll = random.randint(0,100)
-        if roll <= 100:
-            if self.voice_clients:
-                await self.voice_clients[0].disconnect()
-            await channel.connect()
-            self.sound_channel = discord.utils.get(self.voice_clients, guild = channel.guild)
-            scripts_on_dir = os.listdir("resources/respiraciones/")
-            sounds_on_dir = [f for f in scripts_on_dir if (os.path.isfile(os.path.join("resources/respiraciones/", f)) and f.find(".mp3") > -1)]
-            sound = random.choice(sounds_on_dir)
-            self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound, executable="resources\\ffmpeg-2022-01-13-git-c936c319bd-essentials_build\\bin\\ffmpeg.exe"))
+    #async def on_voice_state_update(self, member, before, after):
+    #    if not self.connect_channels: return
+    #    if member.bot: return
+    #    if not after.channel: return
+    #    channel = after.channel
+    #    if not channel: return
+    #    roll = random.randint(0,100)
+    #    if roll <= 100:
+    #        if self.voice_clients:
+    #            await self.voice_clients[0].disconnect()
+    #        await channel.connect()
+    #        self.sound_channel = discord.utils.get(self.voice_clients, guild = channel.guild)
+    #        scripts_on_dir = os.listdir("resources/respiraciones/")
+    #        sounds_on_dir = [f for f in scripts_on_dir if (os.path.isfile(os.path.join("resources/respiraciones/", f)) and f.find(".mp3") > -1)]
+    #        sound = random.choice(sounds_on_dir)
+    #        self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound, executable="resources\\ffmpeg-2022-01-13-git-c936c319bd-essentials_build\\bin\\ffmpeg.exe"))
 
     async def welcome(self, member):
         channel = member.guild.system_channel
@@ -142,10 +142,10 @@ class felaciano(pydiscord.Wrapped_Client):
         await self.welcome(member)
 
 while True:
-    #try:
-    bot = felaciano(language, scripts_file, prefix=prefix, logger=logger, connect=connect_channels, welcome=welcome_memebrs)
-    bot.run(api_key)
-    #except RuntimeError:
-    #    break
-    #except Exception as e:
-    #    logger.error(e)
+    try:
+        bot = felaciano(language, scripts_file, prefix=prefix, logger=logger, connect=connect_channels, welcome=welcome_memebrs)
+        bot.run(api_key)
+    except RuntimeError:
+        break
+    except Exception as e:
+        logger.error(e)
