@@ -4,7 +4,6 @@
 import io
 from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
-import io
 import argparse
 import random
 import services.common
@@ -89,7 +88,7 @@ class felaciano(pydiscord.Wrapped_Client):
             scripts_on_dir = os.listdir("resources/respiraciones/")
             sounds_on_dir = [f for f in scripts_on_dir if (os.path.isfile(os.path.join("resources/respiraciones/", f)) and f.find(".mp3") > -1)]
             sound = random.choice(sounds_on_dir)
-            self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound, executable="resources\\ffmpeg-2022-01-13-git-c936c319bd-essentials_build\\bin\\ffmpeg.exe"))
+            self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound))
 
     async def welcome(self, member):
         channel = member.guild.system_channel
