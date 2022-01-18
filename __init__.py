@@ -64,10 +64,7 @@ class felaciano(pydiscord.Wrapped_Client):
         self.logger.info('Bot is ready.')
     
     async def on_message(self, message:discord.Message):
-        if message.author.bot:
-            return
-        if not message.content[0] == self.prefix:
-            return
+        if message.author.bot: return
         if not self.is_ready():
             await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
             return
