@@ -68,6 +68,7 @@ class felaciano(pydiscord.Wrapped_Client):
         if not self.is_ready():
             await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
             return
+        await self.welcome(message.author)
         await super().on_message(message)
 
     async def on_voice_state_update(self, member, before, after):
