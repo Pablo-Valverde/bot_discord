@@ -66,12 +66,15 @@ if not os.path.isdir(scripts_file):
     sleep(EXIT_TIME)
     exit()
 
-welcome_memebrs = config['WELCOME']
-connect_channels = config['CONNECT']
+welcome_memebrs = config['ON_MEMBER_JOIN']['ENABLED']
+insult = config['ON_MEMBER_JOIN']['INSULT']
+
+connect_channels = config['ON_VOICE_STATE_UPDATE']['ENABLED']
+prob = config['ON_VOICE_STATE_UPDATE']['CHANCE']
 
 class felaciano(pydiscord.Wrapped_Client):
 
-    def __init__(self, services_path: str, prefix: str = "", language: dict = None, logger: logging.Logger = None, connect = True, welcome = True) -> None:
+    def __init__(self, services_path: str, prefix: str = "", language: dict = None, logger: logging.Logger = None, connect = True, welcome = True, insult = True, join_chance = 0.02) -> None:
         super().__init__(services_path, prefix=prefix, language=language, logger=logger)
         if not os.path.isdir("resources"):
             if not os.path.exists("resources"):
@@ -88,7 +91,9 @@ class felaciano(pydiscord.Wrapped_Client):
                     logger.warning("'resources/respiraciones/' should be a directory")
         self.sound_channel = None
         self.connect_channels = connect
+        self.prob = join_chance
         self.welcome_members = welcome
+        self.insult = insult
 
     async def on_ready(self):
         activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
@@ -114,8 +119,8 @@ class felaciano(pydiscord.Wrapped_Client):
         if not after.channel: return
         channel = after.channel
         if not channel: return
-        roll = random.randint(0,100)
-        if roll <= 100:
+        roll = random.randint(1,100)
+        if roll <= int(self.prob * 100):
             if self.voice_clients:
                 await self.voice_clients[0].disconnect()
             await channel.connect()
@@ -155,13 +160,15 @@ class felaciano(pydiscord.Wrapped_Client):
         font = ImageFont.truetype("resources/font.ttf", 36)
         font_name = ImageFont.truetype("resources/font.ttf", 50)
 
-        insulto = ""
-        for _ in range(0,100):
-            insulto = services.common.get_insulto_aleatorio().lower()
-            if insulto.__len__() < 30:
-                break
+        text = "Bienvenido"
+        if self.insult:
+            insulto = ""
+            for _ in range(0,100):
+                insulto = services.common.get_insulto_aleatorio().lower()
+                if insulto.__len__() < 30:
+                    break
 
-        text = "Bienvenido %s" % insulto
+            text += " %s" % insulto
 
         border_color = "black"
         text_color = self.embed_color
@@ -183,7 +190,7 @@ class felaciano(pydiscord.Wrapped_Client):
 
 while True:
     try:
-        bot = felaciano(scripts_file, prefix=prefix, language=language, logger=logger, connect=connect_channels, welcome=welcome_memebrs)
+        bot = felaciano(scripts_file, prefix=prefix, language=language, logger=logger, connect=connect_channels, welcome=welcome_memebrs, insult=insult, join_chance=prob)
         bot.run(api_key)
     except RuntimeError:
         break
