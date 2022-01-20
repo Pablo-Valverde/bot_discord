@@ -2,18 +2,18 @@
     "ES":{
         "COMMANDS":{
             "AVAILABLE_COMMANDS":{
-                "PING":{
-                    "ALIASES":[
-                        "LATENCIA"
-                    ],
-                    "DESCRIPTION": "Muestra la latencia del bot"
-                },
                 "HELP":{
                     "ALIASES":[
                         "COMANDOS",
                         "CMDS"
                     ],
                     "DESCRIPTION": "Muestra el menu de ayuda"
+                },
+                "PING":{
+                    "ALIASES":[
+                        "LATENCIA"
+                    ],
+                    "DESCRIPTION": "Muestra la latencia del bot"
                 },
                 "INSULTAR":{
                     "ALIASES":[
@@ -35,7 +35,7 @@
             "COMMAND_ERROR": "Ha ocurrido un error inesperado al ejecutar el comando",
             "NO_USERS": "No hay usuarios"
         },
-        "EMBED_COLOR_CORRECT": "0xffd79e",
+        "EMBED_COLOR": "0xffd79e",
         "EMBED_COLOR_ERROR": "0xffa3a3"
     }
 }
