@@ -105,7 +105,6 @@ class felaciano(pydiscord.Wrapped_Client):
         if not self.is_ready():
             await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
             return
-        await self.welcome(message.author)
         await super().on_message(message)
 
     async def on_error(self, event_method, *args, **kwargs):
@@ -181,7 +180,7 @@ class felaciano(pydiscord.Wrapped_Client):
         draw.text((513,436), member.name, fill=border_color, font=font_name, anchor="mm")
         draw.text((512,435), member.name, fill=text_color, font=font_name, anchor="mm")
         img.save("tmp.png")
-        await channel.send(file=discord.File("tmp.png", filename="welcome.png"))
+        await channel.send(member.mention, file=discord.File("tmp.png", filename="welcome.png"))
         os.remove("tmp.png")
 
     async def on_member_join(self, member:discord.Member):

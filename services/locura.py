@@ -30,7 +30,7 @@ async def __run__(message, client, *args, **kwargs):
     shuffle(members)
     for member in members:    
         wait_s = random.random()*2
-        await common.insultar(member, message.channel)
+        await common.insultar(message.channel, member)
         if not members.index(member) == members.__len__() - 1:
             await message.channel.trigger_typing()
             await asyncio.sleep(wait_s)

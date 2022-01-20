@@ -2,16 +2,9 @@ import common
 
 
 @staticmethod
-async def __run__(arguments, client, message, *args, **kwards):
-    if not arguments:
+async def __run__(client, message, *args, **kwards):
+    mentions = [user for user in message.mentions if not user == client.user]
+    if not mentions:
+        await common.insultar(message.channel, message.author)
         return
-    arguments = arguments.split(" ", maxsplit=1)[0]
-    try:
-        member = arguments[3:-1]
-        user = await message.guild.fetch_member(int(member))
-        if user.id == client.user.id:
-            user = message.author
-    except:
-        user = message.author
-    finally:
-        await common.insultar(user, message.channel)
+    await common.insultar(message.channel, *mentions)
