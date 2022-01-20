@@ -4,6 +4,12 @@
     "LOG_FILE_EXT" : ".log",
     "LOG_DIRECTORY" : "logs",
 
-    "WELCOME" : true,
-    "CONNECT" : true
+    "ON_VOICE_STATE_UPDATE" : {
+        "ENABLED" : true,
+        "CHANCE" : 0.02
+    },
+    "ON_MEMBER_JOIN" : {
+        "ENABLED" : true,
+        "INSULT" : true
+    }
 }
