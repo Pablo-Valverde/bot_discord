@@ -7,6 +7,7 @@ from PIL import Image,ImageFont,ImageDraw,ImageOps
 import json
 import argparse
 import random
+import sys
 import services.common
 import pydiscord
 import os
@@ -101,6 +102,11 @@ class felaciano(pydiscord.Wrapped_Client):
             return
         await self.welcome(message.author)
         await super().on_message(message)
+
+    async def on_error(self, event_method, *args, **kwargs):
+        e = sys.exc_info()[1]
+        logger.error(e)
+        print("%s non-fatal exception" % e)
 
     async def on_voice_state_update(self, member, before, after):
         if not self.connect_channels: return
