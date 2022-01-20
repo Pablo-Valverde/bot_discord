@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import io
 from time import sleep
 from PIL import Image,ImageFont,ImageDraw,ImageOps
+import io
+import asyncio
 import json
 import argparse
 import random
@@ -14,6 +15,7 @@ import os
 import logging
 import datetime
 import discord
+import traceback
 
 
 EXIT_TIME = 10
@@ -89,7 +91,6 @@ class felaciano(pydiscord.Wrapped_Client):
                     os.mkdir("resources/respiraciones/")
                 else:
                     logger.warning("'resources/respiraciones/' should be a directory")
-        self.sound_channel = None
         self.connect_channels = connect
         self.prob = join_chance
         self.welcome_members = welcome
@@ -98,10 +99,13 @@ class felaciano(pydiscord.Wrapped_Client):
     async def on_ready(self):
         activity = discord.Activity(type=discord.ActivityType.watching, name="el porn-channel")
         await self.change_presence(activity=activity)
-        self.logger.info('Bot is ready.')
+        self.logger.info('Bot started correctly')
     
     async def on_message(self, message:discord.Message):
         if message.author.bot: return
+        await self.welcome(message.author)
+        permissions = message.channel.permissions_for(message.guild.me)
+        if not (permissions.send_messages and permissions.embed_links): return
         if not self.is_ready():
             await message.channel.send("Pero subnormal, dejame llegar al ordenador al menos.")
             return
@@ -109,21 +113,29 @@ class felaciano(pydiscord.Wrapped_Client):
 
     async def on_error(self, event_method, *args, **kwargs):
         e = sys.exc_info()[1]
-        logger.error(e)
-        print("%s non-fatal exception" % e)
+        buffer = ""
+        for a in traceback.format_tb(sys.exc_info()[2]):
+            buffer += a
+        logger.error("\n%s%s" % (buffer, e))
+        print("%s%s\nNon-fatal exception" %  (buffer, e))
 
     async def on_voice_state_update(self, member, before, after):
         if not self.connect_channels: return
         if member.bot: return
+        if not self.is_ready(): return
         if not after.channel: return
+        if after.channel == before.channel: return
         channel = after.channel
         if not channel: return
-        roll = random.randint(1,100)
-        if roll <= int(self.prob * 100):
-            if self.voice_clients:
-                await self.voice_clients[0].disconnect()
-            await channel.connect()
+        permissions = channel.permissions_for(channel.guild.me)
+        if not (permissions.connect and permissions.speak): return
+        roll = random.random()*100
+        if roll <= float(self.prob * 100):
             self.sound_channel = discord.utils.get(self.voice_clients, guild = channel.guild)
+            if self.sound_channel:  await self.sound_channel.move_to(channel)
+            else:                   self.sound_channel = await channel.connect()
+            self.logger.info("Connected to channel with ID %d, got roll %.3f <= %.3f" % (channel.id, roll, float(self.prob * 100)))
+            if self.sound_channel.is_playing(): return
             if not os.path.isdir("resources/respiraciones/"):
                 self.logger.warning("'resources/respiraciones/' is missing, create it or the bot will only join silently...")
                 return
@@ -133,11 +145,15 @@ class felaciano(pydiscord.Wrapped_Client):
                 self.logger.warning("'resources/respiraciones/' got no .mp3 files, add some so the bot can play sound, joinning silently...")
                 return
             sound = random.choice(sounds_on_dir)
+            self.logger.info("Selected soundtrack '%s'" % sound)
             self.sound_channel.play(discord.FFmpegPCMAudio("resources/respiraciones/%s" % sound))
 
     async def welcome(self, member):
         channel = member.guild.system_channel
+        permissions = channel.permissions_for(channel.guild.me)
+        if not (permissions.send_messages and permissions.attach_files): return
         if not channel:
+            self.logger.info("Can't welcome user ID %d. No channel selected in guild ID %d" % (member.id, member.guild.id))
             return
         member_bytes = await member.avatar_url.read()
 
@@ -182,9 +198,11 @@ class felaciano(pydiscord.Wrapped_Client):
         img.save("tmp.png")
         await channel.send(member.mention, file=discord.File("tmp.png", filename="welcome.png"))
         os.remove("tmp.png")
+        self.logger.info("User ID %d correctly welcomed" % member.id)
 
     async def on_member_join(self, member:discord.Member):
         if not self.welcome_members: return
+        self.logger.info("Trying to welcome user with ID %d" % member.id)
         await self.welcome(member)
 
 while True:
@@ -194,7 +212,10 @@ while True:
     except RuntimeError:
         break
     except Exception as e:
-        logger.error(e)
-        print("%s exception, exiting in %d seconds..." % (e, EXIT_TIME))
+        buffer = ""
+        for a in traceback.format_tb(sys.exc_info()[2]):
+            buffer += a
+        logger.error("\n%s" % buffer)
+        print("%sfatal exception, exiting in %d seconds..." % (e, EXIT_TIME))
         sleep(EXIT_TIME)
-        exit()
+        break
