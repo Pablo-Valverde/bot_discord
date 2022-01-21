@@ -102,7 +102,6 @@ class felaciano(pydiscord.Wrapped_Client):
     
     async def on_message(self, message:discord.Message):
         if message.author.bot: return
-        await self.welcome(message.author)
         permissions = message.channel.permissions_for(message.guild.me)
         if not (permissions.send_messages and permissions.embed_links): return
         if not self.is_ready():
