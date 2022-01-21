@@ -4,7 +4,6 @@
 from time import sleep
 from PIL import Image,ImageFont,ImageDraw,ImageOps
 import io
-import asyncio
 import json
 import argparse
 import random
