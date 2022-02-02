@@ -21,7 +21,7 @@ EXIT_TIME = 10
 
 def __parse__():
     parser = argparse.ArgumentParser(
-        description='Random related discord bot.',
+        description='Simplemente Felaciano.',
     )
     parser.add_argument('CONFIG_FILE', type=str, nargs='?', default='config/config.json', help='Configuration file')
     parser.add_argument('SCRIPTS_FILE', type=str, nargs='?', default='services', help='Scripts directory')
