@@ -1,6 +1,5 @@
-import random
 import discord
-import os
+import requests
 
 
 class FileNotFound(Exception):
@@ -17,8 +16,10 @@ async def insultar(channel, *args):
     await channel.send(buffer)
 
 def get_insulto_aleatorio():
-    if not os.path.isfile("insultos.txt"):
-        raise FileNotFound("'insultos.txt' is missing")
-    with open("insultos.txt", "rt", encoding="UTF-8") as insultostxt:
-        insultos = [insulto.replace("\n","") for insulto in insultostxt.readlines()]
-        return random.choice(insultos).lower()
+    request = requests.get("http://127.0.0.1/insultos/aleatorio")
+    request_json = request.json()
+    try:
+        value = request_json["data"]["value"]
+        return value
+    except KeyError:
+        return "No tengo insultos para decirte"

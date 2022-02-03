@@ -1,41 +1,39 @@
 {
-    "ES":{
-        "COMMANDS":{
-            "AVAILABLE_COMMANDS":{
-                "HELP":{
-                    "ALIASES":[
-                        "COMANDOS",
-                        "CMDS"
-                    ],
-                    "DESCRIPTION": "Muestra el menu de ayuda"
-                },
-                "PING":{
-                    "ALIASES":[
-                        "LATENCIA"
-                    ],
-                    "DESCRIPTION": "Muestra la latencia del bot"
-                },
-                "INSULTAR":{
-                    "ALIASES":[
-                        "CAGARSEEN"
-                    ],
-                    "DESCRIPTION": "Insulto a quien tu me digas"
-                },
-                "LOCURA":{
-                    "ALIASES":[
-                        "REVENS",
-                        "MODODIABLO",
-                        "DELOCOS"
-                    ],
-                    "DESCRIPTION": "Me vuelvo loco"
-                }
+    "COMMANDS":{
+        "AVAILABLE_COMMANDS":{
+            "HELP":{
+                "ALIASES":[
+                    "COMANDOS",
+                    "CMDS"
+                ],
+                "DESCRIPTION": "Muestra el menu de ayuda"
             },
-            "ALIAS": "Alias",
-            "ERROR_TITLE": "Error",
-            "COMMAND_ERROR": "Ha ocurrido un error inesperado al ejecutar el comando",
-            "NO_USERS": "No hay usuarios"
+            "PING":{
+                "ALIASES":[
+                    "LATENCIA"
+                ],
+                "DESCRIPTION": "Muestra la latencia del bot"
+            },
+            "INSULTAR":{
+                "ALIASES":[
+                    "CAGARSEEN"
+                ],
+                "DESCRIPTION": "Insulto a quien tu me digas"
+            },
+            "LOCURA":{
+                "ALIASES":[
+                    "REVENS",
+                    "MODODIABLO",
+                    "DELOCOS"
+                ],
+                "DESCRIPTION": "Me vuelvo loco"
+            }
         },
-        "EMBED_COLOR": "0xffd79e",
-        "EMBED_COLOR_ERROR": "0xffa3a3"
-    }
+        "ALIAS": "Alias",
+        "ERROR_TITLE": "Error",
+        "COMMAND_ERROR": "Ha ocurrido un error inesperado al ejecutar el comando",
+        "NO_USERS": "No hay usuarios"
+    },
+    "EMBED_COLOR": "0xffd79e",
+    "EMBED_COLOR_ERROR": "0xffa3a3"
 }
