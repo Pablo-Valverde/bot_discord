@@ -20,15 +20,42 @@ import traceback
 EXIT_TIME = 10
 
 def __parse__():
+<<<<<<< Updated upstream
     parser = argparse.ArgumentParser(
         description='Simplemente Felaciano.',
+=======
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-CONFIG_FILE',
+        '-conf',
+        type=lambda s: str(s),
+        default='config/config.json',
+        help='Configuration file'
     )
-    parser.add_argument('CONFIG_FILE', type=str, nargs='?', default='config/config.json', help='Configuration file')
-    parser.add_argument('SCRIPTS_FILE', type=str, nargs='?', default='services', help='Scripts directory')
-    parser.add_argument('LANGUAGUE_FILE', type=str, nargs='?', default='languages/docs.json', help='Languages file')
+    parser.add_argument(
+        '-SCRIPTS_DIR',
+        '-scripts',
+        type=lambda s: str(s),
+        default='services',
+        help='Scripts directory'
+    )
+    parser.add_argument(
+        '-LANGUAGUE_FILE',
+        '-lang_file',
+        type=lambda s: str(s),
+        default='languages/docs.json',
+        help='Languages file'
+>>>>>>> Stashed changes
+    )
     languages = json.load(open(parser.parse_args().LANGUAGUE_FILE))
     available_languages = [language for language in languages]
-    parser.add_argument('LANGUAGE', type=str, nargs='?', default="ES", choices=available_languages)
+    parser.add_argument(
+        '-LANGUAGE',
+        '-bot_lang',
+        type=lambda s: str(s),
+        default=available_languages[0], 
+        choices=available_languages
+    )
     return parser.parse_args()
 
 script_dir = os.path.dirname(__file__)
@@ -60,10 +87,10 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 api_key = config['BOT_KEY']
-scripts_file = args.SCRIPTS_FILE
-if not os.path.isdir(scripts_file):
-    logger.error("'%s' is not a directory. Check if it exists." % scripts_file)
-    print("'%s' is not a valid scripts directory. exiting in %d seconds..." % (scripts_file,EXIT_TIME))
+scripts_path = args.SCRIPTS_DIR
+if not os.path.isdir(scripts_path):
+    logger.error("'%s' is not a directory. Check if it exists." % scripts_path)
+    print("'%s' is not a valid scripts directory. exiting in %d seconds..." % (scripts_path,EXIT_TIME))
     sleep(EXIT_TIME)
     exit()
 
@@ -205,7 +232,7 @@ class felaciano(pydiscord.Wrapped_Client):
 
 while True:
     try:
-        bot = felaciano(scripts_file, prefix=prefix, language=language, logger=logger, connect=connect_channels, welcome=welcome_memebrs, insult=insult, join_chance=prob)
+        bot = felaciano(scripts_path, prefix=prefix, language=language, logger=logger, connect=connect_channels, welcome=welcome_memebrs, insult=insult, join_chance=prob)
         bot.run(api_key)
     except RuntimeError:
         break
