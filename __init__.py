@@ -20,10 +20,6 @@ import traceback
 EXIT_TIME = 10
 
 def __parse__():
-<<<<<<< Updated upstream
-    parser = argparse.ArgumentParser(
-        description='Simplemente Felaciano.',
-=======
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-CONFIG_FILE',
@@ -45,7 +41,6 @@ def __parse__():
         type=lambda s: str(s),
         default='languages/docs.json',
         help='Languages file'
->>>>>>> Stashed changes
     )
     languages = json.load(open(parser.parse_args().LANGUAGUE_FILE))
     available_languages = [language for language in languages]
